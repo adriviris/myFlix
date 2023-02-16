@@ -1,6 +1,6 @@
 // Imported URL module
 const http = require('http'),
-fs = requite ('fs'),
+fs = require ('fs'),
 url = require ('url');
 
 http.createServer((request, response) => {
