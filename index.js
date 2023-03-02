@@ -82,7 +82,6 @@ url = require('url');
 // STATIC FILES 
 app.use('/staticFiles', express.static('public'));
 
-
 //GET REQUEST
 app.get('/', (req, res) => {
     res.send('Thank you for visiting myFlix!');
@@ -97,9 +96,13 @@ app.get('/movies', (req, res) => {
     console.log('Top 10 Superhero Movies');
 });
 
+//MIDDLEWARE ERROR
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Oh no! What did you do?');
+});
 
 // LISTEN FOR REQUESTS
-
 app.listen(8080, () => { 
     console.log('My first Node test server is running on Port 8080.');
 }); 
