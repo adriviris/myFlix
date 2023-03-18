@@ -1,7 +1,85 @@
 const express = require('express');
 morgan = require('morgan');
 fs = require('fs'), //import built in node modules fs and path
+bodyParser=require('body-parser'),
+uuid=require('uuid'),
 path = require('path');
+
+let users = [
+    {
+        id: 1,
+        name: "Adriana"
+        favoriteMovies: []
+    },
+    {
+        id: 2,
+        name: "Cody"
+        favoriteMovies: ["A Knight's Tale"]
+    },
+]
+
+let movies = [
+    {
+        "Title": "A Knight's Tale",
+        "Description": "After his master dies, a peasant squire, fueled by his desire for food and glory, creates a new identity for himself as a knight.",
+        "Genre": {
+            "Name": "Romantic Comedy",
+            "Description": "A light, comic movie or other work whose plot focuses on the development of a romantic relationship."
+        },
+        "Director": {
+            "Name": "Brian Helgeland",
+            "Bio": "Brian Thomas Helgeland is an American screenwriter, film producer and director. He is most known for writing the screenplays for the films L.A. Confidential and Mystic River.",
+            "Birth": 1961.0
+    },
+    "ImageURL": "https://www.imdb.com/name/nm0001338/mediaviewer/rm458430976/?ref_=nm_ov_ph",
+    "Featured":false
+},
+{
+    "Title": "Life is Beautiful",
+    "Description": "A gentle Jewish-Italian waiter, Guido Orefice (Roberto Benigni), meets Dora (Nicoletta Braschi), a pretty schoolteacher, and wins her over with his charm and humor. Eventually they marry and have a son, Giosue (Giorgio Cantarini). Their happiness is abruptly halted, however, when Guido and Giosue are separated from Dora and taken to a concentration camp. Determined to shelter his son from the horrors of his surroundings, Guido convinces Giosue that their time in the camp is merely a game.",
+    "Genre": {
+        "Name": "Drama",
+        "Description": "In film and television, drama is a category or genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone."
+    },
+    "Director": {
+        "Name": "Roberto Benigni",
+        "Bio": "Roberto Remigio Benigni Cavaliere di Gran Croce OMRI[1] (Italian pronunciation: [roˈbɛrto beˈniɲɲi]; born 27 October 1952) is an Italian actor, comedian, screenwriter and director. He gained international recognition for writing, directing and starring in the Holocaust comedy-drama film Life Is Beautiful (1997), for which he received the Academy Awards for Best Actor and Best International Feature Film. Benigni remains the only actor to win the Best Actor Academy Award for a non-English language performance.",
+        "Birth":1952.0
+},
+"ImageURL": "https://en.wikipedia.org/wiki/Roberto_Benigni#/media/File:Roberto_Benigni-5274.jpg",
+"Featured":false
+},
+{
+    "Title": "The Pale Blue Eye",
+    "Description": "A world-weary detective is hired to investigate the murder of a West Point cadet. Stymied by the cadets' code of silence, he enlists one of their own to help unravel the case - a young man the world would come to know as Edgar Allan Poe.",
+    "Genre": {
+        "Name": "Horror",
+        "Description": "The Dictionary of Film Studies defines the horror film as representing: disturbing and dark subject matter, seeking to elicit responses of fear, terror, disgust, shock, suspense, and, of course, horror from their viewers."
+    },
+    "Director": {
+        "Name": "Scott Cooper",
+        "Bio": "Scott Cooper (born April 20, 1970) is an American director, screenwriter, producer and actor. He is known for writing and directing Crazy Heart (2009), Out of the Furnace (2013), Black Mass (2015), and Hostiles (2017). Abingdon, Virginia, U.S.",
+        "Birth":1970.0
+},
+"ImageURL": "https://en.wikipedia.org/wiki/Scott_Cooper_(director)#/media/File:Scott_Cooper_at_the_2010_Independent_Spirit_Awards.jpg",
+"Featured":false
+},
+{
+    "Title": "Flight",
+    "Description": "An airline pilot saves almost all his passengers on his malfunctioning airliner which eventually crashed, but an investigation into the accident reveals something troubling.",
+    "Genre": {
+        "Name": "Action",
+        "Description": "Action film is a film genre in which the protagonist is thrust into a series of events that typically involve violence and physical feats."
+    },
+    "Director": {
+        "Name": "Robert Zemeckis",
+        "Bio": "Robert Lee Zemeckis is an American filmmaker. He first came to public attention as the director of the action-adventure romantic comedy Romancing the Stone, the science-fiction comedy Back to the Future film trilogy, and the live-action/animated comedy Who Framed Roger Rabbit.",
+        "Birth": 1952.0
+},
+"ImageURL": "http://t3.gstatic.com/licensed-image?q=tbn:ANd9GcQshGN7-dPYmd6C2ah3-Or1p-tju4u03SNDak4tCve2QLwacczJ-iv8th2yzgliS0pKGz1fdk6Db7RWZCQ",
+"Featured":false
+},
+];
 
 //LIST OF TOP 10 SUPER-HERO MOVIES
 let topMovies = [
