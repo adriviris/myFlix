@@ -1,5 +1,5 @@
 {
-  "name": "index.js",
+  "name": "myflix",
   "version": "1.0.0",
   "description": "This application is a REST API created through REACT which                  provides access to a database with information about different                  movies, directors, and genres. The user can also sign up and                 update their information within the site to save information about                 the movies that interest them the most.",
   "main": "index.js",
@@ -15,11 +15,9 @@
     "express": "^4.18.2",
     "lodash": "^4.17.21",
     "morgan": "^1.10.0",
-    "nodemailer": "^6.9.1",
-    "uuid": "^9.0.0"
+    "nodemailer": "^6.9.1"
   },
   "devDependencies": {
-    "eslint": "^8.34.0",
-    "nodemon": "^2.0.21"
+    "eslint": "^8.34.0"
   }
 }
