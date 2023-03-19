@@ -8,12 +8,12 @@ path = require('path');
 let users = [
     {
         id: 1,
-        name: "Adriana"
+        name: "Adriana",
         favoriteMovies: []
     },
     {
         id: 2,
-        name: "Cody"
+        name: "Cody",
         favoriteMovies: ["A Knight's Tale"]
     },
 ]
@@ -80,6 +80,12 @@ let movies = [
 "Featured":false
 },
 ];
+
+// RETURN A LIST OF ALL MOVIES TO USER
+//Read
+app.get('/movies', (req, res) => {
+    res.status(200).json(movies)
+})
 
 //LIST OF TOP 10 SUPER-HERO MOVIES
 let topMovies = [
