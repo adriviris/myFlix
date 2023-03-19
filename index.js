@@ -5,6 +5,66 @@ bodyParser=require('body-parser'),
 uuid=require('uuid'),
 path = require('path');
 
+// RETURN A LIST OF ALL MOVIES TO USER
+//Read
+app.get('/movies', (req, res) => {
+    res.status(200).json(movies)
+})
+
+//LIST OF TOP 10 SUPER-HERO MOVIES
+let topMovies = [
+    {
+        title: 'Spider-man: Into The Spider-Verse',
+        year: 2018,
+        directors: 'Bob Persichetti, Peter Ramsey, Rodney Rothman',
+    },
+    {
+        title: 'The Incredibles',
+        year: 2004,
+        directors: 'Brad Bird',
+    },
+    {
+        title: 'Black Panther',
+        year: 2018,
+        directors: 'Ryan Coogler',
+    },
+    {
+        title: 'Advengers: Endgame',
+        year: 2019,
+        directors: 'Anthony Russo, Joe Russo',
+    },
+    {
+        title: 'Logan',
+        year: 2017,
+        directors: 'James Mangold',
+    },
+    {
+        title: 'The Dark Knight',
+        year: 2008,
+        directors: 'Christopher Nolan',
+    },
+    {
+        title: 'Iron Man',
+        year: 2008,
+        directors: 'Jon Favreau',
+    },
+    {
+        title: 'Superman: The Movie',
+        year: 1978,
+        directors: 'Richard Donner',
+    },
+    {
+        title: 'Wonder Woman',
+        year: 2017,
+        directors: 'Patty Jenkins',
+    },
+    {
+        title: 'Thor: Ragnarok',
+        year: 2017,
+        directors: 'Taika Waititi',
+    },
+];
+
 let users = [
     {
         id: 1,
@@ -79,66 +139,6 @@ let movies = [
 "ImageURL": "http://t3.gstatic.com/licensed-image?q=tbn:ANd9GcQshGN7-dPYmd6C2ah3-Or1p-tju4u03SNDak4tCve2QLwacczJ-iv8th2yzgliS0pKGz1fdk6Db7RWZCQ",
 "Featured":false
 },
-];
-
-// RETURN A LIST OF ALL MOVIES TO USER
-//Read
-app.get('/movies', (req, res) => {
-    res.status(200).json(movies)
-})
-
-//LIST OF TOP 10 SUPER-HERO MOVIES
-let topMovies = [
-    {
-        title: 'Spider-man: Into The Spider-Verse',
-        year: 2018,
-        directors: 'Bob Persichetti, Peter Ramsey, Rodney Rothman',
-    },
-    {
-        title: 'The Incredibles',
-        year: 2004,
-        directors: 'Brad Bird',
-    },
-    {
-        title: 'Black Panther',
-        year: 2018,
-        directors: 'Ryan Coogler',
-    },
-    {
-        title: 'Advengers: Endgame',
-        year: 2019,
-        directors: 'Anthony Russo, Joe Russo',
-    },
-    {
-        title: 'Logan',
-        year: 2017,
-        directors: 'James Mangold',
-    },
-    {
-        title: 'The Dark Knight',
-        year: 2008,
-        directors: 'Christopher Nolan',
-    },
-    {
-        title: 'Iron Man',
-        year: 2008,
-        directors: 'Jon Favreau',
-    },
-    {
-        title: 'Superman: The Movie',
-        year: 1978,
-        directors: 'Richard Donner',
-    },
-    {
-        title: 'Wonder Woman',
-        year: 2017,
-        directors: 'Patty Jenkins',
-    },
-    {
-        title: 'Thor: Ragnarok',
-        year: 2017,
-        directors: 'Taika Waititi',
-    },
 ];
 
 const app = express();
