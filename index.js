@@ -1,15 +1,13 @@
-const express = require('express');
-morgan = require('morgan');
-fs = require('fs'), //import built in node modules fs and path
-bodyParser=require('body-parser'),
-uuid=require('uuid'),
-path = require('path');
+const express = require('express'),
+    morgan = require('morgan');
+    fs = require('fs'), //import built in node modules fs and path
+    bodyParser=require('body-parser'),
+    uuid=require('uuid'),
+    path = require('path');
+    
+    const app = express();
+    app.use(bodyParser.json());
 
-// RETURN A LIST OF ALL MOVIES TO USER
-//Read
-app.get('/movies', (req, res) => {
-    res.status(200).json(movies)
-})
 
 //LIST OF TOP 10 SUPER-HERO MOVIES
 let topMovies = [
@@ -80,7 +78,7 @@ let users = [
 
 let movies = [
     {
-        "Title": "A Knight's Tale",
+        "Title": "A Knights Tale",
         "Description": "After his master dies, a peasant squire, fueled by his desire for food and glory, creates a new identity for himself as a knight.",
         "Genre": {
             "Name": "Romantic Comedy",
@@ -141,27 +139,113 @@ let movies = [
 },
 ];
 
-const app = express();
+//Create 
+app.post('/users', (req, res) => {
+    const newUser = req.body;
+
+    if (newUser.name) {
+        newUser.id = uuid.v4();
+        users.push(newUser);
+        res.status(201).json(newUser)
+    } else {
+    res.status(400).send('users need names')
+}
+})
+
+//Update
+app.put('/users/:id', (req, res) => {
+    const { id } = req.params;
+    const updatedUser = req.body;
+
+    let user = users.find( user => user.id == id);
+
+    if (user){
+        user.name = updatedUser.name;
+        res.status(200).json(user);
+    } else {
+        res.status(400).send('no such user')
+    }
+
+})
+
+//Create
+app.post('/users/:id/:movieTitle', (req, res) => {
+    const { id, movieTitle } = req.params;
+
+    let user = users.find( user => user.id == id);
+
+    if (user){
+        user.favoriteMovies.push(movieTitle);
+        res.status(200).send('${movieTitle} has been added to user ${id} array');;
+    } else {
+        res.status(400).send('no such user')
+    }
+
+})
+
+//Delete
+app.delete('/users/:id/:movieTitle', (req, res) => {
+    const { id, movieTitle } = req.params;
+    
+    let user = users.find( user => user.id == id);
+
+    if (user){
+        user.favoriteMovies = user.favoriteMovies.filter( title => title !-- movieTitle);
+        res.status(200).send('${movieTitle} has been removed to user ${id}\' array');;
+    } else {
+        res.status(400).send('no such user')
+    }
+})
+
+//Read
+app.get('/movies', (req, res) => {
+    res.status(200).json(movies)
+})
+
+//Read
+app.get('/movies/:title', (req, res) => {
+    const { title } = req.params;
+    const movie = movies.find( movie => movie.Title === title);
+    
+    if (movie) { 
+        res.status(200).json(movie);
+    } else {
+        res.status(400).send('no such movie')
+    }
+})
+
+//Read
+app.get('/movies/genre/:genreName', (req, res) => {
+    const { genreName } = req.params;
+    const genre = movies.find( movie => movie.Genre.Name === genreName ).Genre;
+    
+    if (genre) { 
+        res.status(200).json(genre);
+    } else {
+        res.status(400).send('no such genre')
+    }
+})
+
+//Read
+app.get('/movies/directors/:directorName', (req, res) => {
+    const { directorName } = req.params;
+    const director = movies.find( movie => movie.Director.Name === directorName ).Director;
+    
+    if (director) { 
+        res.status(200).json(director);
+    } else {
+        res.status(400).send('no such director')
+    }
+})
+
+
+
 // create a write stream (in append mode)
 // a ‘log.txt’ file is created in root directory
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags : 'a'})
 
 // set up the logger
 app.use (morgan ('combined', {stream: accessLogStream}));
-
-/* const http = require ('http');
-url = require('url');
-
-    http.createServer((request, response) => {
-    let requestURL = url.parse(request.url, true);
-    if ( requestURL.pathname == '/documentation.html') {
-    response.writeHead(200, {'Content-Type': 'text/plain'});
-    response.end('Documentation on the bookclub API.\n'); 
-} else {
-    response.writeHead(200, {'Content-Type': 'text/plain'});
-    response.end('Welcome to my book club!\n');
-}
-}).listen(8080); */
 
 // STATIC FILES 
 app.use('/staticFiles', express.static('public'));
