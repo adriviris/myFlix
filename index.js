@@ -176,7 +176,7 @@ app.post('/users/:id/:movieTitle', (req, res) => {
 
     if (user){
         user.favoriteMovies.push(movieTitle);
-        res.status(200).send('${movieTitle} has been added to user ${id} array');;
+        res.status(200).send(`${movieTitle} has been added to user ${id} array`);
     } else {
         res.status(400).send('no such user')
     }
@@ -191,7 +191,21 @@ app.delete('/users/:id/:movieTitle', (req, res) => {
 
     if (user){
         user.favoriteMovies = user.favoriteMovies.filter( title => title !== movieTitle);
-        res.status(200).send('${movieTitle} has been removed to user ${id}s array');;
+        res.status(200).send(`${movieTitle} has been removed to user ${id}'s array`);
+    } else {
+        res.status(400).send('no such user')
+    }
+})
+
+//Delete
+app.delete('/users/:id', (req, res) => {
+    const { id } = req.params;
+    
+    let user = users.find( user => user.id == id);
+
+    if (user){
+        users = users.filter( user => user.id != id);
+        res.status(200).send(` user ${id} has been deleted`);
     } else {
         res.status(400).send('no such user')
     }
