@@ -15,7 +15,86 @@
                 movies, directors, and genres. </p>
                 <p>The user can also sign up and update their information within the site to save information about
                 the movies that interest them the most.</p>
+
             <h3> Endpoint Documentation: CRUD </h3>
+            <ul>
+                <li> Return a list of ALL movies to the user </li>
+                <li> Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user </li>
+                <li> Return data about a genre (description) by name/title. </li>
+                <li> Return data about a director (bio, birth year) by name. </li>
+                <li> Allow new users to register. </li>
+                <li> Allow users to update their user info (username). </li>
+                <li> Allow users to add a movie to their list of favorites. </li>
+                <li> Allow users to remove a movie from their list of favorites. </li>
+                <li> Allow existing users to deregister. </li>
+            </ul>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Request</th>
+                        <th>URL</th>
+                        <th>HTTP Method</th>
+                        <th>Response</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Return a list of ALL movies to user</td>
+                        <td>/movies</td>
+                        <td>GET</td>
+                        <td>a JSON object holding data about all movies</td>
+                    </tr>
+                    <tr>
+                        <td>Return data about a single movie by title to the user</td>
+                        <td>/movies/:title</td>
+                        <td>GET</td>
+                        <td>a JSON object holding data about a single movie containing the data above</td>
+                    </tr>
+                    <tr>
+                        <td>Return data about a genre by name/title</td>
+                        <td>/movies/genre/:genreName</td>
+                        <td>GET</td>
+                        <td>a JSON object holding data about genre name and its description</td>
+                    </tr>
+                    <tr>
+                        <td>Return data about a director (bio, birth year, death year) by name</td>
+                        <td>/movies/director/:directorName</td>
+                        <td>GET</td>
+                        <td>a JSON object holding data about director such as name, bio, date of birth</td>
+                    </tr>
+                    <tr>
+                        <td>Allow new users to register</td>
+                        <td>/users</td>
+                        <td>POST</td>
+                        <td>a JSON object holding information about a newly created user account</td>
+                    </tr>
+                    <tr>
+                        <td>Allow users to update their user info (username)</td>
+                        <td>/users/:id</td>
+                        <td>PATCH</td>
+                        <td>a JSON object holding updated information of a user account</td>
+                    </tr>
+                    <tr>
+                        <td>Allow users to add a movie to their list of favorites (showing only a text that a movie has been added—more on this later)</td>
+                        <td>/users/:id/:movieTitle</td>
+                        <td>POST</td>
+                        <td>a JSON object containing information of a user account with movieID added</td>
+                    </tr>
+                    <tr>
+                        <td>Allow users to remove a movie from their list of favorites (showing only a text that a movie has been removed—more on this later)</td>
+                        <td>/users/:id/:movieTitle</td>
+                        <td>DELETE</td>
+                        <td>a JSON object holding updated data with a requested movie deleted from the favorites list</td>
+                    </tr>
+                    <tr>
+                        <td>Allow existing users to deregister (showing only a text that a user email has been removed—more on this later)</td>
+                        <td>/users/:id</td>
+                        <td>DELETE</td>
+                        <td>a text message indicating a user account was deleted</td>
+                    </tr>
+                </tbody>
+            </table>
             
             
 
