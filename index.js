@@ -72,7 +72,7 @@ let users = [
     {
         id: 2,
         name: "Cody",
-        favoriteMovies: ["A Knight's Tale"]
+        favoriteMovies: ["A Knights Tale"]
     },
 ]
 
@@ -190,8 +190,8 @@ app.delete('/users/:id/:movieTitle', (req, res) => {
     let user = users.find( user => user.id == id);
 
     if (user){
-        user.favoriteMovies = user.favoriteMovies.filter( title => title !-- movieTitle);
-        res.status(200).send('${movieTitle} has been removed to user ${id}\' array');;
+        user.favoriteMovies = user.favoriteMovies.filter( title => title !== movieTitle);
+        res.status(200).send('${movieTitle} has been removed to user ${id}s array');;
     } else {
         res.status(400).send('no such user')
     }
