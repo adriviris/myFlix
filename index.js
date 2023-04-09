@@ -101,7 +101,7 @@ let movies = [
     },
     "Director": {
         "Name": "Roberto Benigni",
-        "Bio": "Roberto Remigio Benigni Cavaliere di Gran Croce OMRI[1] (Italian pronunciation: [roˈbɛrto beˈniɲɲi]; born 27 October 1952) is an Italian actor, comedian, screenwriter and director. He gained international recognition for writing, directing and starring in the Holocaust comedy-drama film Life Is Beautiful (1997), for which he received the Academy Awards for Best Actor and Best International Feature Film. Benigni remains the only actor to win the Best Actor Academy Award for a non-English language performance.",
+        "Bio": "Roberto Remigio Benigni Cavaliere di Gran Croce is an Italian actor, comedian, screenwriter and director. He gained international recognition for writing, directing and starring in the Holocaust comedy-drama film Life Is Beautiful (1997), for which he received the Academy Awards for Best Actor and Best International Feature Film. Benigni remains the only actor to win the Best Actor Academy Award for a non-English language performance.",
         "Birth":1952.0
 },
 "ImageURL": "https://en.wikipedia.org/wiki/Roberto_Benigni#/media/File:Roberto_Benigni-5274.jpg",
@@ -116,7 +116,7 @@ let movies = [
     },
     "Director": {
         "Name": "Scott Cooper",
-        "Bio": "Scott Cooper (born April 20, 1970) is an American director, screenwriter, producer and actor. He is known for writing and directing Crazy Heart (2009), Out of the Furnace (2013), Black Mass (2015), and Hostiles (2017). Abingdon, Virginia, U.S.",
+        "Bio": "Scott Cooper is an American director, screenwriter, producer and actor. He is known for writing and directing Crazy Heart (2009), Out of the Furnace (2013), Black Mass (2015), and Hostiles (2017). Abingdon, Virginia, U.S.",
         "Birth":1970.0
 },
 "ImageURL": "https://en.wikipedia.org/wiki/Scott_Cooper_(director)#/media/File:Scott_Cooper_at_the_2010_Independent_Spirit_Awards.jpg",
