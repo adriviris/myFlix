@@ -63,3 +63,4 @@ Timestamp: Thu Feb 16 2023 11:03:49 GMT-0500 (Eastern Standard Time)
 ::1 - - [22/Mar/2023:21:48:42 +0000] "DELETE /users/1/ HTTP/1.1" 404 150 "-" "PostmanRuntime/7.31.1"
 ::1 - - [22/Mar/2023:21:48:43 +0000] "DELETE /users/1/ HTTP/1.1" 404 150 "-" "PostmanRuntime/7.31.1"
 ::1 - - [22/Mar/2023:22:37:34 +0000] "DELETE /movies/:title HTTP/1.1" 404 155 "-" "PostmanRuntime/7.31.1"
+::1 - - [25/May/2023:01:06:47 +0000] "POST /movies HTTP/1.1" 404 146 "-" "PostmanRuntime/7.31.1"

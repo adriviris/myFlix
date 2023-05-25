@@ -1,3 +1,11 @@
+const mongoose = require('mongoose');
+const Models = require ('./models');
+
+const Movies = Models.Movie;
+const Users = Models.User;
+
+mongoose.connect('mongodb://localhost:27017/movieapi', { useNewUrlParser: true, useUnifiedTopology: true });
+
 const express = require('express'),
     morgan = require('morgan');
     fs = require('fs'), //import built in node modules fs and path
@@ -7,6 +15,7 @@ const express = require('express'),
     
     const app = express();
     app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
 
 
 //LIST OF TOP 10 SUPER-HERO MOVIES
@@ -169,7 +178,7 @@ app.put('/users/:id', (req, res) => {
 })
 
 //Create
-app.post('/users/:id/:movieTitle', (req, res) => {
+/*app.post('/users/:id/:movieTitle', (req, res) => {
     const { id, movieTitle } = req.params;
 
     let user = users.find( user => user.id == id);
@@ -181,7 +190,35 @@ app.post('/users/:id/:movieTitle', (req, res) => {
         res.status(400).send('no such user')
     }
 
+})*/
+
+//Add a user
+app.post('/user', (req, res) => {
+    Users.findOne({ Username: req.body.Username })
+    .then ((user) => {
+        if (user) { 
+            return res.status(400).send(req.body.Username + 'already exists');
+        } else { 
+            Users.create({
+                Username: req.body.Username,
+                Password: req.body.Password,
+                Email: req.body.Email,
+                Birthday: req.body.Birthday
+            })
+            .then((user) => {res.status(201).json(user) })
+            .catch((error) => {
+                console.error(error);
+                res.status(500).send('Error: ' + error);
+            })
+        }        
 })
+.catch((error) => {
+    console.error(error);
+    res.status(500).send('Error: ' + error);
+});
+});
+
+
 
 //Delete
 app.delete('/users/:id/:movieTitle', (req, res) => {
