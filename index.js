@@ -1,76 +1,25 @@
+const express = require('express');
+const bodyParser=require('body-parser');
+const uuid=require('uuid');
+const morgan = require('morgan');
+const fs = require('fs'); //import built in node modules fs and path
+const path = require('path');
+    
+const app = express();
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
+
 const mongoose = require('mongoose');
-const Models = require ('./models');
+const Models = require ('./models.js');
 
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect('mongodb://localhost:27017/movieapi', { useNewUrlParser: true, useUnifiedTopology: true });
-
-const express = require('express'),
-    morgan = require('morgan');
-    fs = require('fs'), //import built in node modules fs and path
-    bodyParser=require('body-parser'),
-    uuid=require('uuid'),
-    path = require('path');
-    
-    const app = express();
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: true }));
-
-
-//LIST OF TOP 10 SUPER-HERO MOVIES
-let topMovies = [
-    {
-        title: 'Spider-man: Into The Spider-Verse',
-        year: 2018,
-        directors: 'Bob Persichetti, Peter Ramsey, Rodney Rothman',
-    },
-    {
-        title: 'The Incredibles',
-        year: 2004,
-        directors: 'Brad Bird',
-    },
-    {
-        title: 'Black Panther',
-        year: 2018,
-        directors: 'Ryan Coogler',
-    },
-    {
-        title: 'Advengers: Endgame',
-        year: 2019,
-        directors: 'Anthony Russo, Joe Russo',
-    },
-    {
-        title: 'Logan',
-        year: 2017,
-        directors: 'James Mangold',
-    },
-    {
-        title: 'The Dark Knight',
-        year: 2008,
-        directors: 'Christopher Nolan',
-    },
-    {
-        title: 'Iron Man',
-        year: 2008,
-        directors: 'Jon Favreau',
-    },
-    {
-        title: 'Superman: The Movie',
-        year: 1978,
-        directors: 'Richard Donner',
-    },
-    {
-        title: 'Wonder Woman',
-        year: 2017,
-        directors: 'Patty Jenkins',
-    },
-    {
-        title: 'Thor: Ragnarok',
-        year: 2017,
-        directors: 'Taika Waititi',
-    },
-];
+//local host 
+mongoose.connect('mongodb://localhost:27017/movieapi', { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
+});
 
 let users = [
     {
@@ -80,7 +29,7 @@ let users = [
     },
     {
         id: 2,
-        name: "Cody",
+        name: "Tim",
         favoriteMovies: ["A Knights Tale"]
     },
 ]
@@ -148,6 +97,142 @@ let movies = [
 },
 ];
 
+//LIST OF TOP 10 SUPER-HERO MOVIES
+let topMovies = [
+    {
+        title: 'Spider-man: Into The Spider-Verse',
+        year: 2018,
+        directors: 'Bob Persichetti, Peter Ramsey, Rodney Rothman',
+    },
+    {
+        title: 'The Incredibles',
+        year: 2004,
+        directors: 'Brad Bird',
+    },
+    {
+        title: 'Black Panther',
+        year: 2018,
+        directors: 'Ryan Coogler',
+    },
+    {
+        title: 'Advengers: Endgame',
+        year: 2019,
+        directors: 'Anthony Russo, Joe Russo',
+    },
+    {
+        title: 'Logan',
+        year: 2017,
+        directors: 'James Mangold',
+    },
+    {
+        title: 'The Dark Knight',
+        year: 2008,
+        directors: 'Christopher Nolan',
+    },
+    {
+        title: 'Iron Man',
+        year: 2008,
+        directors: 'Jon Favreau',
+    },
+    {
+        title: 'Superman: The Movie',
+        year: 1978,
+        directors: 'Richard Donner',
+    },
+    {
+        title: 'Wonder Woman',
+        year: 2017,
+        directors: 'Patty Jenkins',
+    },
+    {
+        title: 'Thor: Ragnarok',
+        year: 2017,
+        directors: 'Taika Waititi',
+    },
+];
+
+// create a write stream (in append mode)
+// a ‘log.txt’ file is created in root directory
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
+    flags : 'a'
+});
+// set up the logger
+app.use (morgan ('combined', {stream: accessLogStream}));
+
+// STATIC FILES - automatically sends all files that are requested from within the public folder.
+app.use('/staticFiles', express.static('public'));
+
+//GET REQUEST
+app.get('/', (req, res) => {
+    res.send('Thank you for visiting myFlix!');
+});
+
+app.get('/movies', (req, res) => {
+    //res.status(200).json(movies)
+    Movies.find()
+    .then((movies) => {
+        res.status(201).json(movies);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send("Error:" + err)
+    });
+});
+
+app.get('/movies/:title', (req, res) => {
+    Movies.findOne({ Title: req.params.title})
+});
+
+app.get('/movies/genre/:genreName', (req, res) => {
+    const { genreName } = req.params;
+    const genre = movies.find( movie => movie.Genre.Name === genreName ).Genre;
+    
+    if (genre) { 
+        res.status(200).json(genre);
+    } else {
+        res.status(400).send('no such genre')
+    }
+})
+
+app.get('/movies/directors/:directorName', (req, res) => {
+    const { directorName } = req.params;
+    const director = movies.find( movie => movie.Director.Name === directorName ).Director;
+    
+    if (director) { 
+        res.status(200).json(director);
+    } else {
+        res.status(400).send('no such director')
+    }
+})
+
+// Get all users
+app.get('/users', function (req, res) {
+    Users.find()
+    .then(function (users) {
+        res.status(201).json(users);
+    })
+    .catch(function (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
+});
+
+//Get a user by username 
+app.get('/users/:Username', (req, res) => {
+    Users.findOne({ Username: req.params.Username })
+    .then((user) => {
+        res.json(user);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
+});
+
+app.get('/documentation', (req, res) => {
+    res.sendFile('public/documentation.html', {root: __dirname });
+});
+
 //Create 
 app.post('/users', (req, res) => {
     const newUser = req.body;
@@ -192,7 +277,9 @@ app.put('/users/:id', (req, res) => {
 
 })*/
 
-//Add a user
+
+//----------------------------------------------------------------
+//2.8 LESSON - Add a user
 app.post('/user', (req, res) => {
     Users.findOne({ Username: req.body.Username })
     .then ((user) => {
@@ -218,7 +305,65 @@ app.post('/user', (req, res) => {
 });
 });
 
+// Update a user's info, by username
+app.put('/users/:Username', (req, res) => {
+    Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
+    {
+        Username: req.body.Username,
+        Password: req.body.Password,
+        Email: req.body.Email,
+        Birthday: req.body.Birthday
+    }
+    },
+    { new: true }, // This line makes sure that the updated document is returned
+    (err, updatedUser) => {
+    if(err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    } else {
+        res.json(updatedUser);
+    }
+    });
+});
 
+// Add a movie to a user's list of favorites
+app.post('/users/:Username/movies/:MovieID', (req, res) => {
+    Users.findOneAndUpdate({ Username: req.params.Username }, {
+    $push: { FavoriteMovies: req.params.MovieID }
+    },
+     { new: true }, // This line makes sure that the updated document is returned
+    (err, updatedUser) => {
+    if (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    } else {
+        res.json(updatedUser);
+    }
+    });
+});
+
+// Update a user's info, by username
+app.put('/users/:Username', (req, res) => {
+    Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
+    {
+        Username: req.body.Username,
+        Password: req.body.Password,
+        Email: req.body.Email,
+        Birthday: req.body.Birthday
+    }
+    },
+    { new: true }, // This line makes sure that the updated document is returned
+    (err, updatedUser) => {
+    if(err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    } else {
+        res.json(updatedUser);
+    }
+    });
+});
+
+//----------------------------------------------------------------
 
 //Delete
 app.delete('/users/:id/:movieTitle', (req, res) => {
@@ -248,72 +393,6 @@ app.delete('/users/:id', (req, res) => {
     }
 })
 
-//Read
-app.get('/movies', (req, res) => {
-    res.status(200).json(movies)
-})
-
-//Read
-app.get('/movies/:title', (req, res) => {
-    const { title } = req.params;
-    const movie = movies.find( movie => movie.Title === title);
-    
-    if (movie) { 
-        res.status(200).json(movie);
-    } else {
-        res.status(400).send('no such movie')
-    }
-})
-
-//Read
-app.get('/movies/genre/:genreName', (req, res) => {
-    const { genreName } = req.params;
-    const genre = movies.find( movie => movie.Genre.Name === genreName ).Genre;
-    
-    if (genre) { 
-        res.status(200).json(genre);
-    } else {
-        res.status(400).send('no such genre')
-    }
-})
-
-//Read
-app.get('/movies/directors/:directorName', (req, res) => {
-    const { directorName } = req.params;
-    const director = movies.find( movie => movie.Director.Name === directorName ).Director;
-    
-    if (director) { 
-        res.status(200).json(director);
-    } else {
-        res.status(400).send('no such director')
-    }
-})
-
-
-
-// create a write stream (in append mode)
-// a ‘log.txt’ file is created in root directory
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags : 'a'})
-
-// set up the logger
-app.use (morgan ('combined', {stream: accessLogStream}));
-
-// STATIC FILES 
-app.use('/staticFiles', express.static('public'));
-
-//GET REQUEST
-app.get('/', (req, res) => {
-    res.send('Thank you for visiting myFlix!');
-    console.log('Thank you for visiting myFlix!');
-});
-
-app.get('/documentation', (req, res) => {
-    res.sendFile('public/documentation.html', {root: __dirname });
-});
-app.get('/movies', (req, res) => {
-    res.json(topMovies);
-    console.log('Top 10 Superhero Movies');
-});
 
 //MIDDLEWARE ERROR
 app.use((err, req, res, next) => {
