@@ -1,6 +1,6 @@
 const express = require('express');
-const bodyParser=require('body-parser');
-const uuid=require('uuid');
+const bodyParser = require('body-parser');
+const uuid = require('uuid');
 const morgan = require('morgan');
 const fs = require('fs'); //import built in node modules fs and path
 const path = require('path');
@@ -10,7 +10,7 @@ const app = express();
     app.use(bodyParser.urlencoded({ extended: true }));
 
 const mongoose = require('mongoose');
-const Models = require ('./models.js');
+const Models = require('./models.js');
 
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -164,7 +164,6 @@ app.use('/staticFiles', express.static('public'));
 
 //C R U D operations
 //CREATE
-
 //Create new user
 app.post('/users', (req, res) => {
     Users.findOne({ Username: req.body.Username })
@@ -192,7 +191,7 @@ app.post('/users', (req, res) => {
 });
 
 // Add a movie to a user's list of favorites
-app.post('/users/:Username/movies/:MovieID', (req, res) => {
+app.post('/users/:Username/movies/:movieID', (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username }, {
     $push: { FavoriteMovies: req.params.MovieID }
     },
@@ -271,7 +270,7 @@ app.get('/movies/directors/:directorName', (req, res) => {
 });
 
 // Get all users
-app.get('/users', (req, res) => {
+app.get('/users', (_req, res) => {
     Users.find()
     .then((users) => {
         res.status(201).json(users);
@@ -339,7 +338,7 @@ app.put('/users/:Username', (req, res) => {
 //DELETE
 app.delete('/users/:Username/movies/:MovieID', (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username }, {
-        $pull: { FavoriteMovies: req.params.MovieID }
+        $pull: { favoriteMovies: req.params.MovieID }
     },
     { new: true }, // This line makes sure that the updated document is returned
     (err, updatedUser) => {
@@ -381,7 +380,7 @@ app.delete('/users/:Username', (req, res) => {
 });
 
 app.get('/documentation', (req, res) => {
-    res.sendFile('public/documentation.html', {root: __dirname });
+    res.sendFile('myflix/public/documentation.html', {root: __dirname });
 });
 
 //MIDDLEWARE ERROR
