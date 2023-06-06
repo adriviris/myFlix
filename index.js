@@ -13,13 +13,10 @@ const mongoose = require('mongoose');
 const Models = require('./models.js');
 
 const Movies = Models.Movie;
-const Users = Models.User;
+const User = Models.User;
 
 //local host 
-mongoose.connect('mongodb://localhost:27017/movieapi', { 
-    useNewUrlParser: true, 
-    useUnifiedTopology: true 
-});
+mongoose.connect('mongodb://localhost:27017/movieapi', { useNewUrlParser: true, useUnifiedTopology: true});
 
 let users = [
     {
@@ -271,7 +268,7 @@ app.get('/movies/directors/:directorName', (req, res) => {
 
 // Get all users
 app.get('/users', (_req, res) => {
-    Users.find()
+    User.find()
     .then((users) => {
         res.status(201).json(users);
     })
