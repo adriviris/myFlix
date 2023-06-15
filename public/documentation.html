@@ -71,25 +71,25 @@
                     </tr>
                     <tr>
                         <td>Allow users to update their user info (username)</td>
-                        <td>/users/:id</td>
+                        <td>/users/:UserName</td>
                         <td>PATCH</td>
                         <td>a JSON object holding updated information of a user account</td>
                     </tr>
                     <tr>
                         <td>Allow users to add a movie to their list of favorites (showing only a text that a movie has been added—more on this later)</td>
-                        <td>/users/:id/:movieTitle</td>
+                        <td>/users/:Username/movies/:MovieID</td>
                         <td>POST</td>
                         <td>a JSON object containing information of a user account with movieID added</td>
                     </tr>
                     <tr>
                         <td>Allow users to remove a movie from their list of favorites (showing only a text that a movie has been removed—more on this later)</td>
-                        <td>/users/:id/:movieTitle</td>
+                        <td>/users/:Username/movies/:MovieID</td>
                         <td>DELETE</td>
                         <td>a JSON object holding updated data with a requested movie deleted from the favorites list</td>
                     </tr>
                     <tr>
                         <td>Allow existing users to deregister (showing only a text that a user email has been removed—more on this later)</td>
-                        <td>/users/:id</td>
+                        <td>/users/:UserName</td>
                         <td>DELETE</td>
                         <td>a text message indicating a user account was deleted</td>
                     </tr>
