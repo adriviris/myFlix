@@ -9,7 +9,7 @@ const app = express();
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     
-    let auth = require('./auth')(app);
+    let auth = require ('./auth')(app);
     const passport = require( 'passport');
     require('./passport');
 
@@ -184,7 +184,7 @@ app.post('/users', (req, res) => {
 app.post(
     "/users/:Username/movies/:MovieID",
     (req, res) => {
-      User.findOneAndUpdate(
+    User.findOneAndUpdate(
         { UserName: req.params.Username },
         {
           $push: { FavoriteMovies: req.params.MovieID },
