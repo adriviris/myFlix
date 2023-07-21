@@ -8,6 +8,10 @@ const path = require('path');
 const app = express();
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
+    
+    let auth = require('./auth')(app);
+    const passport = require( 'passport');
+    require('./passport');
 
 const mongoose = require('mongoose');
 const Models = require('./models.js');
