@@ -501,3 +501,4 @@ Timestamp: Thu Feb 16 2023 11:03:49 GMT-0500 (Eastern Standard Time)
 ::1 - - [25/Jul/2023:02:25:31 +0000] "GET /users?Username=messiguy&Password=newpw HTTP/1.1" 201 977 "-" "PostmanRuntime/7.32.3"
 ::1 - - [25/Jul/2023:02:25:41 +0000] "GET /users HTTP/1.1" 201 977 "-" "PostmanRuntime/7.32.3"
 ::1 - - [25/Jul/2023:02:26:06 +0000] "POST /users?Username=messiguy&Password=newpw HTTP/1.1" 400 22 "-" "PostmanRuntime/7.32.3"
+::1 - - [25/Jul/2023:02:37:42 +0000] "POST /users?Username=messiguy&Password=newpw HTTP/1.1" 400 22 "-" "PostmanRuntime/7.32.3"

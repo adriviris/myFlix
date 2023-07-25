@@ -225,7 +225,7 @@ app.get('/', (req, res) => {
     res.send('Thank you for visiting myFlix!');
 });
 
-app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/movies', (req, res) => {
     //res.status(200).json(movies)
     Movies.find()
     .then((movies) => {
