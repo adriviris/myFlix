@@ -199,7 +199,7 @@ app.post(
           res.status(500).send("Error: " + err);
         });
     }
-  );
+);
 
 /*app.post('/users/:UserName/movies/:MovieID', (req, res) => {
     User.findOne({ UserName: req.params.UserName }, {
@@ -212,7 +212,7 @@ app.post(
         res.status(500).send('Error: ' + err);
     } else {
        // res.json(updatedUser).send(); 
-       console.log('successfully updated');
+        console.log('successfully updated');
         res.status(200).send(updatedUser)
     }
     });
@@ -225,7 +225,7 @@ app.get('/', (req, res) => {
     res.send('Thank you for visiting myFlix!');
 });
 
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) => {
     //res.status(200).json(movies)
     Movies.find()
     .then((movies) => {
