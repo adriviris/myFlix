@@ -10,7 +10,7 @@ const app = express();
     app.use(bodyParser.urlencoded({ extended: true }));
     
     let auth = require ('./auth')(app);
-    const passport = require( 'passport');
+    const passport = require('passport');
     require('./passport');
 
 const mongoose = require('mongoose');
