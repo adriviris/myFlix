@@ -181,9 +181,7 @@ app.post('/users', (req, res) => {
 
 // Add a movie to a user's list of favorites
 
-app.post(
-    "/users/:Username/movies/:MovieID",
-    (req, res) => {
+app.post("/users/:Username/movies/:MovieID", (req, res) => {
     User.findOneAndUpdate(
         { UserName: req.params.Username },
         {
@@ -225,9 +223,9 @@ app.get('/', (req, res) => {
     res.send('Thank you for visiting myFlix!');
 });
 
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
     //res.status(200).json(movies)
-    Movies.find()
+    await Movies.find()
     .then((movies) => {
         res.status(201).json(movies);
     })
@@ -309,8 +307,13 @@ app.get('/users/:UserName', (req, res) => {
 })*/
 
 //Updates user info
-app.put('/users/:UserName', (req, res) => {
-    User.findOneAndUpdate({UserName: req.params.UserName}, { 
+app.put('/users/:UserName', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    //CONDITION TO CHECK ADDED HERE
+    if (req.user.UserName !== req.params.UserName){
+        return res.status(400).send('Permission Denied');
+    }
+    //CONDITION ENDS
+    await User.findOneAndUpdate({UserName: req.params.UserName}, { 
         $set: {
             Username: req.body.UserName,
             Password: req.body.Password,
@@ -318,16 +321,23 @@ app.put('/users/:UserName', (req, res) => {
             Birthday: req.body.Birthday
         }
     },
-    {new: true}, // This line makes sure that the updated document is returned
-    (err, updateUser) => {
+    {new: true}) // This line makes sure that the updated document is returned
+
+    /*(err, updateUser) => {
         if(err) {
             console.error(err);
             res.status(500).send('Error: ' + err);
         } else {
             res.json(updateUser);
-        }
-        });
-    });
+        }*/
+        .then((updatedUser) => {
+            res.json(updatedUser);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).send('Error: ' + err);
+        })
+});
 
 
 //DELETE
