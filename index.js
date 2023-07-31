@@ -344,22 +344,22 @@ app.put('/users/:UserName', passport.authenticate('jwt', { session: false }), as
 app.delete(
     "/users/:Username/movies/:MovieID",
     (req, res) => {
-      User.findOneAndUpdate(
-        { UserName: req.params.Username },
-        {
-          $pull: { FavoriteMovies: req.params.MovieID },
-        },
-        { new: true }
-      )
-        .then((user) => {
-          res.status(200).json(user);
-        })
-        .catch((err) => {
-          console.error(err);
-          res.status(500).send("Error: " + err);
-        });
-    }
-  );
+        User.findOneAndUpdate(
+            { UserName: req.params.Username },
+            {
+                $pull: { FavoriteMovies: req.params.MovieID },
+            },
+            { new: true }
+            )
+            .then((user) => {
+                res.status(200).json(user);
+            })
+            .catch((err) => {
+                console.error(err);
+                res.status(500).send("Error: " + err);
+            });
+        }
+        );
 
 app.delete('/users/:id/:movieTitle', (req, res) => {
     const { id, movieTitle } = req.params;
