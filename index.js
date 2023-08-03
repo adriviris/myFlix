@@ -158,9 +158,10 @@ app.use('/staticFiles', express.static('public'));
 //CREATE
 //Create new user
 app.post('/users', (req, res) => {
-    User.findOne({ UserName: req.body.UserName })
+    let hashedPassword = User.hashPassword(req.body.Password);
+    User.findOne({ UserName: req.body.UserName }) // Search to see if a user with the requested username already exists
     .then ((user) => {
-        if (user) { 
+        if (user) {  //If the user is found, send a response that it already exists
             return res.status(400).send(req.body.UserName + 'already exists');
         } else { 
             User.create({
