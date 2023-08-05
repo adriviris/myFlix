@@ -16,6 +16,8 @@ app.use(cors());
     const passport = require('passport');
     require('./passport');
 
+const { check, validationResult } = require('express-validator');
+
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 
@@ -166,7 +168,7 @@ app.post('/users', (req, res) => {
         } else { 
             User.create({
                 UserName: req.body.UserName,
-                Password: req.body.Password,
+                Password: hashedPassword,
                 Email: req.body.Email,
                 Birthday: req.body.Birthday
             })
