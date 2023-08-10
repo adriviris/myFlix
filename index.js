@@ -23,6 +23,7 @@ const Models = require('./models.js');
 
 const Movies = Models.Movie;
 const User = Models.User;
+mongoose.connect('mongodb://localhost:27017/myflixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 //local host 
 mongoose.connect('mongodb://localhost:27017/mvapi', { useNewUrlParser: true, useUnifiedTopology: true});
