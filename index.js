@@ -23,10 +23,13 @@ const Models = require('./models.js');
 
 const Movies = Models.Movie;
 const User = Models.User;
-mongoose.connect('mongodb://localhost:27017/myflixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+//mongoose.connect('mongodb+srv://myflixadmin:fj4YZhabwlipiIOX@cluster0.ltpi7kt.mongodb.net/sample_mflix', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://adminmyflix:password123456 @myflixdb.jjcd40j.mongodb.net/?retryWrites=true&w=majority');
+//EXAMPLE PROVIDED BY MONGO ATLAS:   const uri = "mongodb+srv://adminmyflix:<password>@myflixdb.jjcd40j.mongodb.net/?retryWrites=true&w=majority";
+const cursor = coll.find();
 
 //local host 
-mongoose.connect('mongodb://localhost:27017/mvapi', { useNewUrlParser: true, useUnifiedTopology: true});
+//mongoose.connect('mongodb://localhost:27017/mvapi', { useNewUrlParser: true, useUnifiedTopology: true});
 
 
 let movies = [
@@ -257,7 +260,7 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), async (req,
 });
 
 app.get('/movies/:title', (req, res) => {
-    Movies.findOne({ Title: req.params.title})
+    Movies.findOne({ title: req.params.title})
     .then((movies) => {
         res.status(200).json(movies);
     })
