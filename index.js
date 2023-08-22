@@ -26,7 +26,7 @@ const User = Models.User;
 //mongoose.connect('mongodb+srv://myflixadmin:fj4YZhabwlipiIOX@cluster0.ltpi7kt.mongodb.net/sample_mflix', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect('mongodb+srv://adminmyflix:password123456 @myflixdb.jjcd40j.mongodb.net/?retryWrites=true&w=majority');
 //EXAMPLE PROVIDED BY MONGO ATLAS:   const uri = "mongodb+srv://adminmyflix:<password>@myflixdb.jjcd40j.mongodb.net/?retryWrites=true&w=majority";
-const cursor = coll.find();
+
 
 //local host 
 //mongoose.connect('mongodb://localhost:27017/mvapi', { useNewUrlParser: true, useUnifiedTopology: true});
