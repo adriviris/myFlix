@@ -26,7 +26,6 @@ const User = Models.User;
 // mongoose.connect('mongodb+srv://myflixadmin:fj4YZhabwlipiIOX@cluster0.ltpi7kt.mongodb.net/sample_mflix', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-
 //local host 
 //mongoose.connect('mongodb://localhost:27017/mvapi', { useNewUrlParser: true, useUnifiedTopology: true});
 
