@@ -24,7 +24,8 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const User = Models.User;
 // mongoose.connect('mongodb+srv://myflixadmin:fj4YZhabwlipiIOX@cluster0.ltpi7kt.mongodb.net/sample_mflix', { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect( 'mongodb+srv://adminmyflix:password12345 @myflixdb.jjcd40j.mongodb.net/myFlixDB?retryWrites=true&w=majority ', { useNewUrlParser: true, useUnifiedTopology: true });
 
 //local host 
 //mongoose.connect('mongodb://localhost:27017/mvapi', { useNewUrlParser: true, useUnifiedTopology: true});
