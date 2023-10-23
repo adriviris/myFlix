@@ -246,7 +246,7 @@ app.get('/', (req, res) => {
     res.send('Thank you for visiting myFlix!');
 });
 
-app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.get('/movies', async (req, res) => {
     //res.status(200).json(movies)
     await Movies.find()
     .then((movies) => {
