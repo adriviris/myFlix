@@ -4,17 +4,36 @@ const uuid = require('uuid');
 const morgan = require('morgan');
 const fs = require('fs'); //import built in node modules fs and path
 const path = require('path');
+const cors = require('cors');
+
     
 const app = express();
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
 
 const cors = require ('cors');
-app.use(cors());
+// app.use(cors());
 
-    let auth = require ('./auth')(app);
-    const passport = require('passport');
-    require('./passport');
+    // let auth = require ('./auth')(app);
+    // const passport = require('passport');
+    // require('./passport');
+
+    const allowedOrigins = ['https://myflixmyflix.netlify.app'];
+
+    app.use(cors({
+        origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+    
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'The CORS policy for this site does not allow access from the specified origin.';
+            return callback(new Error(msg), false);
+        }
+    
+            return callback(null, true);
+        },
+    }));
+    
 
 const { check, validationResult } = require('express-validator');
 
@@ -23,12 +42,8 @@ const Models = require('./models.js');
 
 const Movies = Models.Movie;
 const User = Models.User;
-// mongoose.connect('mongodb+srv://myflixadmin:fj4YZhabwlipiIOX@cluster0.ltpi7kt.mongodb.net/sample_mflix', { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-//mongoose.connect( 'mongodb+srv://adminmyflix:password12345@myflixdb.jjcd40j.mongodb.net/myFlixDB?retryWrites=true&w=majority ', { useNewUrlParser: true, useUnifiedTopology: true });
 
-//local host 
-//mongoose.connect('mongodb://localhost:27017/mvapi', { useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 let movies = [
